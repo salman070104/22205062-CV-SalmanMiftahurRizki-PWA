@@ -422,5 +422,59 @@
     }
     imJs.m();
 
+    
+
 
 })(jQuery, window)
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js')
+    .then(function(registration) {
+        console.log('Service Worker registered with scope:', registration.scope);
+        askNotificationPermission(); // Minta izin setelah service worker terdaftar
+    })
+    .catch(function(error) {
+        console.error('Service Worker registration failed:', error);
+    });
+}
+
+// Fungsi untuk meminta izin notifikasi
+function askNotificationPermission() {
+    Notification.requestPermission().then(function(permission) {
+        if (permission === 'granted') {
+            console.log('Notification permission granted.');
+            subscribeUser 
+            ToPush(); // Langganan push setelah izin diberikan
+        } else {
+            console.log('Notification permission denied.');
+        }
+    });
+}
+
+// Fungsi untuk langganan ke push notifications
+function subscribeUserToPush()
+{
+    navigator.serviceWorker.ready.then(function(registration) {
+        const applicationServerKey = urlB64ToUint8Array('<YOUR_PUBLIC_VAPID_KEY>'); // Ganti dengan kunci publik VAPID Anda
+        registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: applicationServerKey
+        }).then(function(subscription) {
+            console.log('User  is subscribed:', subscription);
+            // Kirim subscription ke server Anda untuk menyimpannya
+        }).catch(function(err) {
+            console.log('Failed to subscribe the user: ', err);
+        });
+    });
+}
+
+// Fungsi untuk mengonversi VAPID key dari base64
+function urlB64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+
+    const rawData = window.atob(base64);
+    return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
+}
