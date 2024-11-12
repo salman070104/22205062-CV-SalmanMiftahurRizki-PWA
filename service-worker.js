@@ -66,11 +66,11 @@ self.addEventListener('push', function(event) {
 
 self.addEventListener('push', function(event) {
   const data = event.data ? event.data.json() : {};
-  const title = data.title || 'Default Title';
+  const title = data.title || 'Hai Kawan';
   const options = {
-    body: data.body || 'Default message body',
-    icon: '/path/to/icon-192x192.png',
-    badge: '/path/to/icon-72x72.png'
+    body: data.body || 'Selamat datang di myweb',
+    icon: 'notif.png',
+    badge: 'notif1.png'
   };
 
   event.waitUntil(
