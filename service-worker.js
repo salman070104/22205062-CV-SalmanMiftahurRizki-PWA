@@ -50,3 +50,16 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+self.addEventListener('push', function(event) {
+  const data = event.data ? event.data.json() : {};
+  const title = data.title || 'Default Title';
+  const options = {
+    body: data.body || 'Default message body',
+    icon: '/path/to/icon-192x192.png',
+    badge: '/path/to/icon-72x72.png'
+  };
+
+  event.waitUntil(
+    self.registration.showNotification(title, options)
+  );
+});
