@@ -50,18 +50,6 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-self.addEventListener('push', function(event) {
-  const data = event.data ? event.data.json() : { title: 'Default Title', body: 'Default Body' };
 
-  const options = {
-      body: data.body,
-      icon: 'assets/images/icons/icon-192x192.png', // Ganti dengan path ikon Anda
-      badge: 'assets/images/icons/icon-192x192.png' // Ganti dengan path badge Anda
-  };
-
-  event.waitUntil(
-      self.registration.showNotification(data.title, options)
-  );
-});
 
 
