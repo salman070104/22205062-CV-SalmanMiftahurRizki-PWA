@@ -64,16 +64,4 @@ self.addEventListener('push', function(event) {
   );
 });
 
-self.addEventListener('push', function(event) {
-  const data = event.data ? event.data.json() : {};
-  const title = data.title || 'Hai Kawan';
-  const options = {
-    body: data.body || 'Selamat datang di myweb',
-    icon: 'notif.png',
-    badge: 'notif1.png'
-  };
 
-  event.waitUntil(
-    self.registration.showNotification(title, options)
-  );
-});
